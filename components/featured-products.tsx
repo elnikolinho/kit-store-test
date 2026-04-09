@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Shirt } from "lucide-react"
+import { features } from "@/lib/config"
 
 const featuredProducts = [
   {
@@ -15,10 +16,40 @@ const featuredProducts = [
 ]
 
 export function FeaturedProducts() {
+  if (!features.shop) {
+    return (
+      <section className="py-20 bg-background">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-xs tracking-engravers text-accent font-semibold mb-2">CURATED SELECTION</p>
+            <h2 className="font-serif text-3xl sm:text-4xl tracking-wide-custom text-foreground font-bold">
+              FEATURED KITS
+            </h2>
+          </div>
+
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10 w-full max-w-3xl">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="aspect-square bg-secondary rounded flex items-center justify-center">
+                  <Shirt className="h-8 w-8 text-muted-foreground/30" />
+                </div>
+              ))}
+            </div>
+            <p className="font-serif text-lg tracking-wide-custom text-foreground mb-2">
+              COMING SOON
+            </p>
+            <p className="text-sm text-muted-foreground max-w-md">
+              Our curated collection of authentic vintage jerseys is being prepared. Stay tuned.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="py-20 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
         <div className="flex items-end justify-between mb-12">
           <div>
             <p className="text-xs tracking-engravers text-accent font-semibold mb-2">CURATED SELECTION</p>
@@ -35,7 +66,6 @@ export function FeaturedProducts() {
           </Link>
         </div>
 
-        {/* Products grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProducts.map((product) => (
             <div 
@@ -69,7 +99,6 @@ export function FeaturedProducts() {
           ))}
         </div>
 
-        {/* Mobile view all link */}
         <div className="mt-8 sm:hidden text-center">
           <Link 
             href="/shop/jerseys" 

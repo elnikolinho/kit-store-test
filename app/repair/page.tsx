@@ -1,6 +1,8 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { RepairForm } from "@/components/repair-form"
+import { ComingSoon } from "@/components/coming-soon"
+import { features } from "@/lib/config"
 import { Wrench, Printer, Sparkles, Clock, CheckCircle, Shield } from "lucide-react"
 
 const services = [
@@ -47,7 +49,6 @@ export default function RepairPage() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 pt-16">
-        {/* Hero section */}
         <section className="py-16 bg-background">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
@@ -62,7 +63,6 @@ export default function RepairPage() {
           </div>
         </section>
 
-        {/* Services section */}
         <section className="py-16 bg-secondary">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
@@ -92,7 +92,6 @@ export default function RepairPage() {
           </div>
         </section>
 
-        {/* Benefits section */}
         <section className="py-16 bg-background">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -111,7 +110,6 @@ export default function RepairPage() {
           </div>
         </section>
 
-        {/* Request form section */}
         <section className="py-16 bg-card border-t border-border">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl mx-auto">
@@ -125,12 +123,17 @@ export default function RepairPage() {
                 </p>
               </div>
 
-              <RepairForm />
+              {features.repair ? (
+                <RepairForm />
+              ) : (
+                <ComingSoon
+                  message="Our repair request form is being set up. In the meantime, reach out to us on Instagram @comeback.kits for any repair inquiries."
+                />
+              )}
             </div>
           </div>
         </section>
 
-        {/* How it works */}
         <section className="py-16 bg-secondary">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">

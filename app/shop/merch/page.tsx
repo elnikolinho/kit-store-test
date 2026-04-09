@@ -1,5 +1,7 @@
 import { ProductGrid } from "@/components/product-grid"
 import { ShopFilters } from "@/components/shop-filters"
+import { ComingSoon } from "@/components/coming-soon"
+import { features } from "@/lib/config"
 
 const merchProducts = [
   { id: 101, name: "Comeback Kits Classic Tee", team: "Comeback Kits", year: "2024", price: 45, image: "/images/products/ck-tee.jpg", category: "merch" },
@@ -14,7 +16,6 @@ export default function MerchPage() {
   return (
     <div className="py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Page header */}
         <div className="mb-12">
           <p className="text-xs tracking-engravers text-muted-foreground mb-2">COLLECTION</p>
           <h1 className="font-serif text-3xl sm:text-4xl tracking-wide-custom text-foreground mb-4">
@@ -25,22 +26,25 @@ export default function MerchPage() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Filters sidebar */}
-          <aside className="w-full lg:w-64 shrink-0">
-            <ShopFilters type="merch" />
-          </aside>
-
-          {/* Products grid */}
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-muted-foreground">
-                {merchProducts.length} products
-              </p>
+        {features.merch ? (
+          <div className="flex flex-col lg:flex-row gap-8">
+            <aside className="w-full lg:w-64 shrink-0">
+              <ShopFilters type="merch" />
+            </aside>
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-sm text-muted-foreground">
+                  {merchProducts.length} products
+                </p>
+              </div>
+              <ProductGrid products={merchProducts} />
             </div>
-            <ProductGrid products={merchProducts} />
           </div>
-        </div>
+        ) : (
+          <ComingSoon
+            message="We're working on exclusive Comeback Kits merchandise. Follow us on Instagram to be the first to know when it drops."
+          />
+        )}
       </div>
     </div>
   )

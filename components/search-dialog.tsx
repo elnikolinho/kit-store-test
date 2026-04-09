@@ -38,7 +38,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search jerseys, merch..."
+            placeholder="Search jerseys..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground"

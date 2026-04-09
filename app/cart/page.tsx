@@ -7,8 +7,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Minus, Plus, X, ArrowRight, ShoppingBag } from "lucide-react"
+import { features } from "@/lib/config"
 
-// Mock cart items
 const initialCartItems = [
   { 
     id: 1, 
@@ -29,7 +29,8 @@ const initialCartItems = [
 ]
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState(initialCartItems)
+  const shopEnabled = features.shop || features.merch
+  const [cartItems, setCartItems] = useState(shopEnabled ? initialCartItems : [])
 
   const updateQuantity = (id: number, change: number) => {
     setCartItems(items => 
@@ -68,16 +69,15 @@ export default function CartPage() {
                 <p className="text-muted-foreground mb-8">
                   Looks like you haven&apos;t added anything yet.
                 </p>
-                <Link href="/shop/vintage">
+                <Link href="/shop/jerseys">
                   <Button className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm tracking-wide-custom">
-                    SHOP VINTAGE
+                    BROWSE JERSEYS
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Cart items */}
                 <div className="lg:col-span-2">
                   <div className="space-y-6">
                     {cartItems.map((item) => (
@@ -85,7 +85,6 @@ export default function CartPage() {
                         key={item.id}
                         className="flex gap-4 p-4 bg-card rounded border border-border"
                       >
-                        {/* Image */}
                         <div className="w-24 h-24 relative bg-secondary rounded overflow-hidden shrink-0">
                           <Image
                             src={item.image}
@@ -95,7 +94,6 @@ export default function CartPage() {
                           />
                         </div>
 
-                        {/* Details */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between gap-4">
                             <div>
@@ -111,7 +109,6 @@ export default function CartPage() {
                           </div>
 
                           <div className="flex items-center justify-between mt-4">
-                            {/* Quantity */}
                             <div className="flex items-center gap-2">
                               <button 
                                 onClick={() => updateQuantity(item.id, -1)}
@@ -130,7 +127,6 @@ export default function CartPage() {
                               </button>
                             </div>
 
-                            {/* Price */}
                             <p className="text-sm text-accent font-medium">
                               ${item.price * item.quantity}
                             </p>
@@ -141,7 +137,6 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Order summary */}
                 <div className="lg:col-span-1">
                   <div className="bg-card rounded border border-border p-6 sticky top-24">
                     <h2 className="font-serif text-lg tracking-wide-custom text-foreground mb-6">

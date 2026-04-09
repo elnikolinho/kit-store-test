@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Instagram } from "lucide-react"
+import { features } from "@/lib/config"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -9,7 +10,6 @@ export function Footer() {
     <footer className="bg-secondary border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
           <div className="md:col-span-1">
             <Link href="/" className="inline-block">
               <Image
@@ -26,29 +26,27 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Shop Links */}
           <div>
             <h3 className="font-serif text-xs tracking-engravers text-foreground mb-4">SHOP</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/shop/jerseys" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Jerseys
+                  Jerseys {!features.shop && <span className="text-xs opacity-60">(Coming Soon)</span>}
                 </Link>
               </li>
               <li>
                 <Link href="/shop/merch" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Merchandise
+                  Merchandise {!features.merch && <span className="text-xs opacity-60">(Coming Soon)</span>}
                 </Link>
               </li>
               <li>
                 <Link href="/repair" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Repair & Reprint
+                  Repair & Reprint {!features.repair && <span className="text-xs opacity-60">(Coming Soon)</span>}
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Support Links */}
           <div>
             <h3 className="font-serif text-xs tracking-engravers text-foreground mb-4">SUPPORT</h3>
             <ul className="space-y-3">
@@ -70,7 +68,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal Links */}
           <div>
             <h3 className="font-serif text-xs tracking-engravers text-foreground mb-4">LEGAL</h3>
             <ul className="space-y-3">
@@ -93,13 +90,11 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom section */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
             &copy; {currentYear} Comeback Kits. All rights reserved.
           </p>
           
-          {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
               href="https://www.instagram.com/comeback.kits"

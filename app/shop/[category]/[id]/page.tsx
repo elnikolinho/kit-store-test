@@ -3,8 +3,9 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { AddToCartButton } from "@/components/add-to-cart-button"
 import { ProductGrid } from "@/components/product-grid"
+import { ComingSoon } from "@/components/coming-soon"
+import { features } from "@/lib/config"
 
-// Mock product database
 const allProducts = [
   { id: 1, name: "1998 France Home", team: "France", year: "1998", price: 189, image: "/images/products/france-98.jpg", category: "vintage", description: "The iconic home jersey worn during France's triumphant 1998 World Cup campaign on home soil. Features the classic blue with subtle geometric pattern and the famous rooster crest.", sizes: ["M", "L", "XL"], condition: "Excellent - Minor wear consistent with age" },
   { id: 2, name: "1994 Brazil Away", team: "Brazil", year: "1994", price: 165, image: "/images/products/brazil-94.jpg", category: "vintage", description: "Brazil's stunning away kit from their 1994 World Cup winning campaign in the USA. A rare piece of Brazilian football history.", sizes: ["S", "M", "L"], condition: "Very Good - Some light fading" },
@@ -31,6 +32,26 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { category, id } = await params
+
+  const isEnabled = (category === "merch" && features.merch) || (category !== "merch" && features.shop)
+
+  if (!isEnabled) {
+    return (
+      <div className="py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Link 
+            href={`/shop/${category}`}
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to {category === "merch" ? "Merchandise" : "Jerseys"}
+          </Link>
+          <ComingSoon message="This product is not available yet. Check back soon." />
+        </div>
+      </div>
+    )
+  }
+
   const product = allProducts.find(p => p.id === parseInt(id))
 
   if (!product) {
@@ -44,7 +65,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     )
   }
 
-  // Get related products from same category
   const relatedProducts = allProducts
     .filter(p => p.category === category && p.id !== product.id)
     .slice(0, 4)
@@ -52,7 +72,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Back link */}
         <Link 
           href={`/shop/${category}`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
@@ -61,9 +80,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           Back to {category === "vintage" ? "Vintage" : "Merchandise"}
         </Link>
 
-        {/* Product details */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Image */}
           <div className="aspect-square relative bg-card rounded overflow-hidden">
             <Image
               src={product.image}
@@ -74,7 +91,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
           </div>
 
-          {/* Info */}
           <div>
             <p className="text-xs tracking-engravers text-muted-foreground mb-2">{product.year}</p>
             <h1 className="font-serif text-2xl sm:text-3xl tracking-wide-custom text-foreground mb-4">
@@ -86,7 +102,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.description}
             </p>
 
-            {/* Condition */}
             {product.category === "vintage" && (
               <div className="mb-6">
                 <p className="text-xs tracking-wide text-foreground mb-2">CONDITION</p>
@@ -94,7 +109,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             )}
 
-            {/* Sizes */}
             <div className="mb-8">
               <p className="text-xs tracking-wide text-foreground mb-3">
                 {product.sizes.length === 1 && product.sizes[0] === "One Size" ? "SIZE" : "AVAILABLE SIZES"}
@@ -111,10 +125,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            {/* Add to cart */}
             <AddToCartButton product={product} />
 
-            {/* Additional info */}
             <div className="mt-8 pt-8 border-t border-border space-y-4">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Shipping</span>
@@ -130,7 +142,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
 
-        {/* Related products */}
         {relatedProducts.length > 0 && (
           <div className="mt-20">
             <h2 className="font-serif text-xl tracking-wide-custom text-foreground mb-8">

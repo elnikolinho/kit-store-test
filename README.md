@@ -1,6 +1,4 @@
-# Comeback Kits
-
-Premium vintage jerseys, custom merch, and expert jersey repair & reprinting services.
+# Test Store
 
 ## Tech Stack
 
